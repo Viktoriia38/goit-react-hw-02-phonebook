@@ -17,7 +17,6 @@ export class App extends Component {
   };
 
   sendContact = contact => {
-    console.log(this.state);
     const { name } = this.state;
     const repeatName = this.state.contacts.find(({ name }) => {
       return contact.name === name;

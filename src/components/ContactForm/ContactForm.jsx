@@ -24,9 +24,6 @@ export class ContactForm extends Component {
   };
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
-
     return (
       <form onSubmit={this.handleSubmit} className={css.phonebook}>
         <label className={css.name} htmlFor="">
