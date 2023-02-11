@@ -22,7 +22,7 @@ export class App extends Component {
       return contact.name === name;
     });
     if (repeatName) {
-      alert(`${name} is already in your contacts!`);
+      alert(`${contact.name} is already in your contacts!`);
       return;
     } else {
       this.setState(prevState => {
