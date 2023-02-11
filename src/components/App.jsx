@@ -7,36 +7,31 @@ const { Component } = require('react');
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { number, name } = this.state;
-    const repeatName = this.state.contacts.find(item => {
-      return item.name === name;
+  sendContact = contact => {
+    console.log(this.state);
+    const { name } = this.state;
+    const repeatName = this.state.contacts.find(({ name }) => {
+      return contact.name === name;
     });
     if (repeatName) {
       alert(`${name} is already in your contacts!`);
-      this.reset();
       return;
     } else {
-      const newContact = { id: nanoid(), name, number };
-      this.setState(() => {
-        return { contacts: [...this.state.contacts, newContact] };
+      this.setState(prevState => {
+        return {
+          contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
+        };
       });
     }
-    this.reset();
-  };
-
-  reset = () => {
-    this.setState({ name: '', number: '' });
   };
 
   onBtnDelete = e => {
@@ -67,12 +62,7 @@ export class App extends Component {
       <div>
         <div action="" className={css.phonebook}>
           <h1 className={css.phonebookTitle}>Phonebook</h1>
-          <ContactForm
-            onChange={this.handleChange}
-            valueNumber={this.state.number}
-            value={this.state.name || ''}
-            onSubmit={this.handleSubmit}
-          />
+          <ContactForm onSubmit={this.sendContact} />
           <h1 className={css.contactTitle}>Contacts</h1>
           <Filter onChange={this.handleFilter} value={this.state.filter} />
           <ContactList
